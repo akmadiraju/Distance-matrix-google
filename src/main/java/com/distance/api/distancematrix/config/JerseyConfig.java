@@ -10,8 +10,6 @@ public class JerseyConfig  extends ResourceConfig{
 	
 	public JerseyConfig() {
 		register(DistanceResource.class);
-		
-		
 	}
 
 }

@@ -8,7 +8,6 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 public class DistanceMatrixApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
-		System.out.println("Its here");
 		SpringApplication.run(DistanceMatrixApplication.class, args);
 	}
 }
