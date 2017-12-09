@@ -5,19 +5,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
-import com.google.maps.DistanceMatrixApiRequest;
 import com.google.maps.GeoApiContext;
 
 @Configuration
 @PropertySource({"application.properties"})
 public class AppConfig {
 	
-	
 	@Value("${remote-service-apikey}")
 	private String API_KEY;
 	
-	
-	private GeoApiContext geoApiContext(){
+	@Bean(name="geoApiContext")
+	public GeoApiContext geoApiContext(){
 		GeoApiContext geoApiContext = new GeoApiContext.Builder()
 				.apiKey(API_KEY)
 			    .build();
@@ -27,11 +25,9 @@ public class AppConfig {
 	
 
 	
-	@Bean(name = "distanceRequest")
-	public DistanceMatrixApiRequest distanceRequest() {
-		GeoApiContext geoApiContext = geoApiContext();
-		return new DistanceMatrixApiRequest(geoApiContext);
-		
-	}
+
+	
+
+
 
 }

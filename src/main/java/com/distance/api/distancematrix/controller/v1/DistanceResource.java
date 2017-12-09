@@ -1,4 +1,4 @@
-package com.distance.api.distancematrix.rest.v1;
+package com.distance.api.distancematrix.controller.v1;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
