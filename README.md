@@ -1,4 +1,8 @@
 # distance-matrix-google
-Rename application-local.properties to application.properties
+Add a valid google api-key to field name remote-service-apikey in either application.properties ot application-local.properties file
 
-Add a valid google api-key to field name remote-service-apikey
+This is a Maven project, execute run.sh file to start the application
+
+Use springboot generated default password, with user as user for authorization
+
+

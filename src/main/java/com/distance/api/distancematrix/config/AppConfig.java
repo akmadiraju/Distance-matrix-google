@@ -4,11 +4,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 
 import com.google.maps.GeoApiContext;
 
 @Configuration
-@PropertySource({"application.properties"})
+@PropertySources({
+		@PropertySource(value= {"application.properties"}),
+		@PropertySource(value= {"application-${spring.active.profile}.properties"})
+		})
 public class AppConfig {
 	
 	@Value("${remote-service-apikey}")
@@ -22,7 +26,7 @@ public class AppConfig {
 		
 		return geoApiContext;
 	}
-	
+//	{"application.properties"}
 
 	
 
