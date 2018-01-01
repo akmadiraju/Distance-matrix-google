@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import javax.ws.rs.InternalServerErrorException;
 
 import org.apache.tomcat.util.buf.StringUtils;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.distance.api.distancematrix.model.DistanceElements;
@@ -19,7 +20,7 @@ import com.google.maps.model.DistanceMatrixElement;
 import com.google.maps.model.DistanceMatrixRow;
 import com.google.maps.model.TravelMode;
 
-@Service
+@Component
 public class DistanceServieceImpl implements DistanceService {
 	
 	
@@ -30,7 +31,7 @@ public class DistanceServieceImpl implements DistanceService {
 	
 
 	@Override
-	public DistanceElements getDistance(String origin, String destination, String apiKey) {
+	public DistanceElements getDistanceMatrix(String origin, String destination) {
 		// TODO Auto-generated method stub
 		DistanceMatrix distance = getDistanceFromMatrix(origin, destination);
 		matrixRows = distance.rows[0].elements[0];

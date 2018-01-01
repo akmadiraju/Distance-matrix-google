@@ -3,6 +3,7 @@ package com.distance.api.distancematrix.controller.v1;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -13,6 +14,8 @@ import javax.ws.rs.core.Response.Status;
 
 import org.springframework.stereotype.Component;
 
+import com.distance.api.distancematrix.model.DistanceElements;
+import com.distance.api.distancematrix.model.DriveModeRequest;
 import com.distance.api.distancematrix.service.DistanceService;
 
 
@@ -44,14 +47,29 @@ public class DistanceResource {
 			@PathParam(value = "destination") String destination,
 			@HeaderParam(value = "ApiKey") String apiKey) {
 		if (isApiKeyValid(apiKey)) {
-			ResponseBuilder builder = responseBuilder(Status.OK, distanceService.getDistance(origin, destination, apiKey ));
+			DistanceElements distanceElements = distanceService.getDistanceMatrix(origin, destination );
+			ResponseBuilder builder = responseBuilder(Status.OK, distanceElements);
 			return builder.build();
 		}else {
 			ResponseBuilder builder = responseBuilder(Status.FORBIDDEN, null );
 			return builder.build();
 		}
-
 	}
+	
+//	@POST
+//	@Path("/origin/{origin}/destination/{destination}")
+//	public Response getDistanceMatrix(@PathParam(value="origin") String origin,
+//			@PathParam(value = "destination") String destination,
+//			DriveModeRequest driveModeReq,
+//			@HeaderParam(value = "ApiKey") String apiKey){
+//		
+//		if (isApiKeyValid(apiKey)) {
+//			
+//		}else {
+//			ResponseBuilder builder = responseBuilder(Status.FORBIDDEN, null);
+//		}
+//		return null;	
+//	}
 	
 	
 	private Response.ResponseBuilder responseBuilder(Status status, Object responseObject) {

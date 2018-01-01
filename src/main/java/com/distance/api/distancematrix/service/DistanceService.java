@@ -1,8 +1,11 @@
 package com.distance.api.distancematrix.service;
 
+import com.distance.api.distancematrix.model.DistanceElements;
+
 public interface DistanceService {
 
-	public Object getDistance(String origin, String destination, String apiKey);
+
+	DistanceElements getDistanceMatrix(String origin, String destination);
 	
 	
 

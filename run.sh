@@ -3,7 +3,7 @@
 source ~/.profile
 mvn clean
 echo "**************mvn clean Completed **************"
-mvn -U clean install
+mvn -Dmaven.test.skup=true -U clean install
 
 echo "************** mvn clean installCompleted **************"
 if[$1 == "debug"] then

@@ -26,7 +26,6 @@ public class AppConfig {
 		
 		return geoApiContext;
 	}
-//	{"application.properties"}
 
 	
 
