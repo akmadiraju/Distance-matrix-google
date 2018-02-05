@@ -3,40 +3,39 @@ package com.distance.api.distancematrix.service;
 import java.io.IOException;
 
 import javax.inject.Inject;
-import javax.ws.rs.InternalServerErrorException;
+import javax.inject.Named;
 
-import org.apache.tomcat.util.buf.StringUtils;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
+import com.distance.api.distancematrix.exception.DistanceMatrixException;
 import com.distance.api.distancematrix.model.DistanceElements;
 import com.google.maps.DirectionsApi.RouteRestriction;
 import com.google.maps.DistanceMatrixApiRequest;
 import com.google.maps.GeoApiContext;
 import com.google.maps.errors.ApiException;
-import com.google.maps.model.Distance;
 import com.google.maps.model.DistanceMatrix;
 import com.google.maps.model.DistanceMatrixElement;
-import com.google.maps.model.DistanceMatrixRow;
+import com.google.maps.model.DistanceMatrixElementStatus;
 import com.google.maps.model.TravelMode;
 
-@Component
+@Named
 public class DistanceServieceImpl implements DistanceService {
 	
 	
 	@Inject
 	private GeoApiContext geoApiContext;
 	
+
+	
 	private DistanceMatrixElement matrixRows;
 	
 
 	@Override
-	public DistanceElements getDistanceMatrix(String origin, String destination) {
+	public DistanceElements getDistanceMatrix(String origin, String destination, String apiKey) {
 		// TODO Auto-generated method stub
-		DistanceMatrix distance = getDistanceFromMatrix(origin, destination);
+		DistanceMatrix distance = getDistanceFromMatrix(origin, destination,  apiKey);
 		matrixRows = distance.rows[0].elements[0];
-		if (matrixRows == null ) {
-			throw new InternalServerErrorException("An Unknown Error Occured");
+		
+		if (matrixRows.status == DistanceMatrixElementStatus.NOT_FOUND ) {
+			throw new DistanceMatrixException("Invalid data in the request");
 		}
 		
 		DistanceElements distanceElements = new DistanceElements();
@@ -46,7 +45,10 @@ public class DistanceServieceImpl implements DistanceService {
 		return distanceElements;
 	}
 	
-	public DistanceMatrix getDistanceFromMatrix(String origin, String destination) {
+	public DistanceMatrix getDistanceFromMatrix(String origin, String destination,
+			String apiKey) {
+		
+
 		try {
 			DistanceMatrixApiRequest distanceRequest = new DistanceMatrixApiRequest(geoApiContext);
 			return distanceRequest.origins(origin)
@@ -56,9 +58,7 @@ public class DistanceServieceImpl implements DistanceService {
 					.language("English")
 					.await();
 		} catch (ApiException | InterruptedException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RuntimeException(e.getMessage());
 		}
-		return null;
 	}
 }
